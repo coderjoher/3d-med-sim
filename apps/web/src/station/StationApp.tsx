@@ -5,6 +5,7 @@
  *   /station               server mode (lab server API)
  *   /station?mode=local    Phase 0 prototype: no backend, built-in cases, local scoring & logs
  *   /station/bench         performance harness (§15 exit criteria)
+ *   /station/explore       free exploration / comparison of models & variants (not graded)
  *
  * Query options: station=<id>, input=mouse, kiosk=0, hb=<heartbeat ms>.
  */
@@ -26,6 +27,7 @@ import { HandCursor, HandLostWarning, InputNotice } from './HandOverlay';
 import { KioskExitButton, LockOverlay, useKioskLock } from './Kiosk';
 import { StationInputProvider, useStationInput, type InputMode } from './StationInput';
 import { Bench } from './Bench';
+import { Explore } from './Explore';
 import {
   downloadJson, listLocalAttempts, newId, notifyQueueChanged, saveLocalAttempt, stationId,
   syncQueue, useHeartbeat, useSyncQueue, type SyncItem,
@@ -41,6 +43,7 @@ export function StationApp() {
   return (
     <Routes>
       <Route path="bench" element={<Bench />} />
+      <Route path="explore" element={<Explore />} />
       <Route path="*" element={<StationShell />} />
     </Routes>
   );
@@ -185,7 +188,8 @@ function StationFlow() {
     }
     try {
       const res = await api<StartAttemptResponse>('/attempts/start', { method: 'POST', json: { client_attempt_id: clientAttemptId, session_id: entry.session_id, case_id: entry.case_id, station_id: sid } });
-      const pc = { ...res.case, time_limit_min: res.case.time_limit_min ?? entry.time_limit_min };
+      // the proctor's session timer (R-08) takes precedence over the case default
+      const pc = { ...res.case, time_limit_min: entry.time_limit_min ?? res.case.time_limit_min };
       setActive({ playerCase: pc, attemptId: res.attempt_id, clientAttemptId, sessionId: entry.session_id, caseVersion: res.case_version, modelVersion: res.model_version, startedAt: res.started_at ?? Date.now() });
       setStep('playing');
     } catch (e) {
@@ -310,7 +314,7 @@ function StationFlow() {
           {cases.map((c) => {
             const done = completed.includes(c.case_id);
             return (
-              <div className="card" key={`${c.session_id ?? ''}:${c.case_id}`} data-testid={`case-${c.case_id}`}>
+              <div className="card" key={`${c.session_id ?? ''}:${c.case_id}`} data-testid={`case-${c.case_id}`} data-session={c.session_id ?? ''}>
                 <div>
                   <strong>{c.full ? tx(c.full.topic ?? c.case_id) : c.title}</strong>
                   <div className="muted small">

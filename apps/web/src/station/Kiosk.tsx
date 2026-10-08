@@ -70,6 +70,9 @@ export function KioskExitButton({ onExit }: { onExit(): void }) {
       setPin('');
       setErr('');
       if (document.fullscreenElement) document.exitFullscreen().catch(() => undefined);
+      // Inside the Tauri kiosk shell, the native side re-checks the PIN and quits the app.
+      const tauri = (window as unknown as { __TAURI__?: { core?: { invoke(cmd: string, args: unknown): Promise<unknown> } } }).__TAURI__;
+      tauri?.core?.invoke('exit_kiosk', { pin }).catch(() => undefined);
       onExit();
     } else {
       setErr(s('wrong_pin'));

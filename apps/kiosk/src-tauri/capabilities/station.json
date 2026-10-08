@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "station",
+  "description": "The remote station page (served by the lab server) may only call the kiosk exit command.",
+  "windows": ["station"],
+  "remote": {
+    "urls": ["http://medsim-lab.local:3000/*", "http://localhost:3000/*", "http://localhost:5173/*"]
+  },
+  "permissions": ["core:default"]
+}

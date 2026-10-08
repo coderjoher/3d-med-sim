@@ -7,6 +7,10 @@ non-functional requirement (§13) is assigned to exactly one phase below, and ea
 phase has a test checklist. Test IDs (e.g. `T0-05`) appear in the names of the
 automated tests, so `npm run test:report` maps checklist → passing tests.
 
+**Status (8 Oct 2026): all 62 checklist items across Phases 0–3 pass their automated
+tests. See `docs/TEST_REPORT.md`. The items marked `[~]` below need people, licences or
+lab hardware; the software tools for them are included.**
+
 Legend: `[x]` automated test passes · `[~]` tooling delivered, needs people /
 lab hardware to sign off (cannot be completed in software) · `[ ]` open.
 

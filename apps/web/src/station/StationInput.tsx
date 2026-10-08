@@ -69,8 +69,9 @@ export function StationInputProvider({ children, initialMode = 'gesture', primar
 
   const ensureTracker = useCallback(() => {
     if (trackerRef.current) return trackerRef.current;
-    const tr = new HandTracker({ bus, calibration, primaryHand, face: parallaxOnRef.current }, {
-      onStatus: (s) => setStatus(s),
+    const simulate = (() => { try { return new URLSearchParams(location.search).get('vision') === 'inject'; } catch { return false; } })();
+    const tr = new HandTracker({ bus, calibration, primaryHand, face: parallaxOnRef.current, simulate }, {
+      onStatus: (s, detail) => { setStatus(s); debugRoot().tracking = { status: s, detail }; },
       onCursor: (p) => {
         if (!p) { setCursor(null); return; }
         setCursor({ x: p.x, y: p.y, pinching: p.pinching });
@@ -94,7 +95,7 @@ export function StationInputProvider({ children, initialMode = 'gesture', primar
     trackerRef.current = tr;
     // Test / diagnostics hook: feed landmark messages exactly as the worker would.
     debugRoot().injectLandmarks = (m: Omit<VisionLandmarks, 'type' | 'id' | 'procMs'> & Partial<VisionLandmarks>) => {
-      (tr as unknown as { onWorker(m: VisionLandmarks): void }).onWorker({ id: 0, procMs: 0, ...m, face: m.face ?? null, type: 'landmarks' });
+      tr.onWorker({ id: 0, procMs: 0, ...m, face: m.face ?? null, type: 'landmarks' });
     };
     return tr;
   }, [bus, calibration, primaryHand]);
@@ -167,9 +168,10 @@ export function StationInputProvider({ children, initialMode = 'gesture', primar
   // keyboard fallback (always on)
   useEffect(() => {
     const onKey = (ev: KeyboardEvent) => {
-      const t = ev.target as HTMLElement | null;
+      const t = ev.target instanceof Element ? ev.target : null;
       if (t && (t.closest('input, textarea, select, [contenteditable="true"]'))) return;
       if (ev.ctrlKey || ev.altKey || ev.metaKey) return;
+      if (document.querySelector('.lock-overlay')) return;
       const e = keyToSemantic(ev.key, ev.shiftKey);
       if (!e) return;
       // keep focused buttons/links usable with the keyboard

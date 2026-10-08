@@ -1,6 +1,7 @@
 /** I-07: hand cursor, tracking-status indicator and "hand lost" warning. */
 import { usePrefs } from '../shared/prefs';
 import { useStationInput } from './StationInput';
+import './strings';
 
 export function HandCursor() {
   const input = useStationInput();

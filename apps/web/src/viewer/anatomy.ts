@@ -256,7 +256,7 @@ export function variantMods(variantId: string, organ: string, structureIds: stri
 // Camera presets (V-02)
 // --------------------------------------------------------------------------------------------
 
-export const DEFAULT_RADIUS = 5.2;
+export const DEFAULT_RADIUS = 4.4;
 
 export function presetAngles(preset: string): { alpha: number; beta: number } {
   switch (preset) {

@@ -1,0 +1,14 @@
+{
+  "name": "@medsim/kiosk",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tauri v2 kiosk shell for MedSim Lab stations (not part of the npm workspaces; build on the target machine).",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}

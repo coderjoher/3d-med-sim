@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedSim Lab Station</title>
+    <style>
+      body { margin: 0; height: 100vh; display: grid; place-items: center; font-family: system-ui, sans-serif; background: #0d1b20; color: #fff; text-align: center; }
+      p { opacity: 0.8; }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>MedSim Lab</h1>
+      <p>Connecting to the lab server… / جارٍ الاتصال بخادم المختبر…</p>
+      <p id="u"></p>
+    </div>
+    <script>
+      // Fallback page: retries the configured station URL until the lab server is reachable.
+      const url = new URLSearchParams(location.search).get('url') || 'http://medsim-lab.local:3000/station';
+      document.getElementById('u').textContent = url;
+      setInterval(() => fetch(url, { mode: 'no-cors' }).then(() => location.replace(url)).catch(() => {}), 3000);
+    </script>
+  </body>
+</html>

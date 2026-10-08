@@ -25,6 +25,8 @@ export interface HandTrackerOptions {
   baseUrl?: string;
   /** For tests: inject a worker factory. */
   createWorker?: () => Worker;
+  /** No camera / worker: landmarks are injected (window.__medsim.injectLandmarks) — demos and e2e tests. */
+  simulate?: boolean;
 }
 
 export class HandTracker {
@@ -59,6 +61,11 @@ export class HandTracker {
   async start(): Promise<boolean> {
     if (this.running) return true;
     this.setStatus('starting');
+    if (this.opts.simulate) {
+      this.running = true;
+      this.setStatus('no-hand');
+      return true;
+    }
     if (!navigator.mediaDevices?.getUserMedia) {
       this.setStatus('unavailable', 'no-media-devices');
       return false;
@@ -93,7 +100,8 @@ export class HandTracker {
     this.worker?.postMessage(m, transfer);
   }
 
-  private onWorker(m: FromWorker) {
+  /** Handle a worker message (public for landmark injection in simulate mode). */
+  onWorker(m: FromWorker) {
     if (m.type === 'ready') {
       this.setStatus('no-hand');
       this.pump();
