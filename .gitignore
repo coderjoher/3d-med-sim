@@ -1,0 +1,11 @@
+node_modules/
+dist/
+coverage/
+.vite/
+test-results/
+playwright-report/
+*.log
+.env
+apps/web/public/mediapipe/
+packages/server/data/
+target/

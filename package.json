@@ -1,0 +1,17 @@
+{
+  "name": "medsim-lab",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": ["packages/core", "packages/server", "apps/web"],
+  "scripts": {
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "npm run test:e2e -w apps/web",
+    "test:report": "node scripts/test-report.mjs",
+    "build": "npm run build -w apps/web && npm run build -w packages/server",
+    "dev:server": "npm run dev -w packages/server",
+    "dev:web": "npm run dev -w apps/web"
+  },
+  "engines": { "node": ">=20" }
+}

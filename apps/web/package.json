@@ -1,0 +1,39 @@
+{
+  "name": "@medsim/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "fetch:vision": "node scripts/fetch-vision-assets.mjs"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^9.30.0",
+    "@babylonjs/gui": "^9.30.0",
+    "@babylonjs/loaders": "^9.30.0",
+    "@mediapipe/tasks-vision": "^1.1.0",
+    "@medsim/core": "^0.1.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.7",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "jsdom": "^29.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.3"
+  }
+}
