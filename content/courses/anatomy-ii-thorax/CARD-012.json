@@ -1,0 +1,77 @@
+{
+  "case_id": "CARD-012",
+  "course": "Anatomy II - Thorax",
+  "topic": "Valvular heart disease",
+  "model": "heart_v1",
+  "variant": "mitral_stenosis",
+  "stem": {
+    "en": "A 45-year-old woman presents with exertional dyspnea and a history of rheumatic fever.",
+    "ar": "امرأة تبلغ من العمر 45 عاماً تشكو من ضيق النفس عند الجهد ولديها تاريخ إصابة بالحمى الروماتيزمية."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "pericardium"
+    ]
+  },
+  "labels_visible": false,
+  "time_limit_min": 10,
+  "feedback_level": "score",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the affected valve.",
+        "ar": "اختر الصمام المصاب."
+      },
+      "answer": [
+        "TA:mitral_valve"
+      ],
+      "points": 2,
+      "feedback": {
+        "en": "Rheumatic heart disease most commonly causes mitral stenosis.",
+        "ar": "يسبب مرض القلب الروماتيزمي تضيق الصمام التاجي في أغلب الأحيان."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "mcq",
+      "prompt": {
+        "en": "What is the most likely etiology?",
+        "ar": "ما السبب الأكثر ترجيحاً؟"
+      },
+      "options": {
+        "a": {
+          "en": "Congenital",
+          "ar": "خلقي"
+        },
+        "b": {
+          "en": "Rheumatic",
+          "ar": "روماتيزمي"
+        },
+        "c": {
+          "en": "Infective",
+          "ar": "عدوائي"
+        },
+        "d": {
+          "en": "Degenerative",
+          "ar": "تنكسي"
+        }
+      },
+      "answer": "b",
+      "points": 1,
+      "feedback": {
+        "en": "A history of rheumatic fever points to rheumatic mitral stenosis.",
+        "ar": "يشير تاريخ الإصابة بالحمى الروماتيزمية إلى تضيق تاجي روماتيزمي المنشأ."
+      }
+    }
+  ],
+  "meta": {
+    "author": "author1",
+    "reviewer": "reviewer1",
+    "version": 3,
+    "status": "published",
+    "difficulty": "medium"
+  }
+}

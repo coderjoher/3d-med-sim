@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "tsx watch src/main.ts",
     "start": "tsx src/main.ts",
-    "build": "tsup src/main.ts --format esm --out-dir dist --clean",
+    "build": "tsup",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:pg": "TEST_DATABASE_URL=${TEST_DATABASE_URL:-postgres://postgres@localhost:5432/medsim_test} vitest run"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.1",

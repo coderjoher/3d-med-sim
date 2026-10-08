@@ -1,0 +1,182 @@
+{
+  "id": "kidney_v1",
+  "organ": "kidney",
+  "name": {
+    "en": "Kidney (placeholder model)",
+    "ar": "الكلية (نموذج مبدئي)"
+  },
+  "version": 1,
+  "layers": [
+    {
+      "id": "capsule",
+      "name": {
+        "en": "Capsule",
+        "ar": "المحفظة"
+      }
+    },
+    {
+      "id": "cortex",
+      "name": {
+        "en": "Cortex",
+        "ar": "القشرة"
+      }
+    },
+    {
+      "id": "medulla",
+      "name": {
+        "en": "Medulla",
+        "ar": "اللب"
+      }
+    },
+    {
+      "id": "collecting_system",
+      "name": {
+        "en": "Collecting system",
+        "ar": "الجهاز الجامع"
+      }
+    },
+    {
+      "id": "vessels",
+      "name": {
+        "en": "Renal vessels",
+        "ar": "الأوعية الكلوية"
+      }
+    }
+  ],
+  "structures": [
+    {
+      "id": "TA:renal_capsule",
+      "name": {
+        "en": "Renal capsule",
+        "ar": "المحفظة الكلوية"
+      },
+      "layer": "capsule"
+    },
+    {
+      "id": "TA:renal_cortex",
+      "name": {
+        "en": "Renal cortex",
+        "ar": "القشرة الكلوية"
+      },
+      "layer": "cortex"
+    },
+    {
+      "id": "TA:renal_column",
+      "name": {
+        "en": "Renal column",
+        "ar": "العمود الكلوي"
+      },
+      "layer": "cortex"
+    },
+    {
+      "id": "TA:renal_medulla",
+      "name": {
+        "en": "Renal medulla",
+        "ar": "اللب الكلوي"
+      },
+      "layer": "medulla"
+    },
+    {
+      "id": "TA:renal_pyramid",
+      "name": {
+        "en": "Renal pyramid",
+        "ar": "الهرم الكلوي"
+      },
+      "layer": "medulla"
+    },
+    {
+      "id": "TA:renal_papilla",
+      "name": {
+        "en": "Renal papilla",
+        "ar": "الحليمة الكلوية"
+      },
+      "layer": "medulla"
+    },
+    {
+      "id": "TA:minor_calyx",
+      "name": {
+        "en": "Minor calyx",
+        "ar": "الكأس الصغرى"
+      },
+      "layer": "collecting_system"
+    },
+    {
+      "id": "TA:major_calyx",
+      "name": {
+        "en": "Major calyx",
+        "ar": "الكأس الكبرى"
+      },
+      "layer": "collecting_system"
+    },
+    {
+      "id": "TA:renal_pelvis",
+      "name": {
+        "en": "Renal pelvis",
+        "ar": "الحوض الكلوي"
+      },
+      "layer": "collecting_system"
+    },
+    {
+      "id": "TA:ureter",
+      "name": {
+        "en": "Ureter",
+        "ar": "الحالب"
+      },
+      "layer": "collecting_system",
+      "ta_code": "A08.2.01.001"
+    },
+    {
+      "id": "TA:renal_artery",
+      "name": {
+        "en": "Renal artery",
+        "ar": "الشريان الكلوي"
+      },
+      "layer": "vessels"
+    },
+    {
+      "id": "TA:renal_vein",
+      "name": {
+        "en": "Renal vein",
+        "ar": "الوريد الكلوي"
+      },
+      "layer": "vessels"
+    }
+  ],
+  "variants": [
+    {
+      "id": "normal",
+      "name": {
+        "en": "Normal",
+        "ar": "طبيعي"
+      },
+      "pathological": false
+    },
+    {
+      "id": "renal_cyst",
+      "name": {
+        "en": "Simple renal cyst",
+        "ar": "كيس كلوي بسيط"
+      },
+      "pathological": true,
+      "affects": [
+        "TA:renal_cortex",
+        "TA:renal_capsule"
+      ]
+    },
+    {
+      "id": "hydronephrosis",
+      "name": {
+        "en": "Hydronephrosis",
+        "ar": "استسقاء الكلية"
+      },
+      "pathological": true,
+      "affects": [
+        "TA:renal_pelvis",
+        "TA:major_calyx",
+        "TA:minor_calyx",
+        "TA:renal_papilla",
+        "TA:renal_medulla"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "case_id": "REN-001",
+  "course": "Renal System",
+  "topic": "Renal anatomy",
+  "model": "kidney_v1",
+  "variant": "renal_cyst",
+  "stem": {
+    "en": "A simple renal cyst is found incidentally on abdominal CT in a 50-year-old woman. Review the internal anatomy of the kidney.",
+    "ar": "اكتُشف كيس كلوي بسيط بالصدفة في التصوير المقطعي للبطن لدى امرأة تبلغ من العمر 50 عاماً. راجع التشريح الداخلي للكلية."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "capsule"
+    ]
+  },
+  "labels_visible": false,
+  "time_limit_min": 10,
+  "feedback_level": "full",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the region from which the cyst arises.",
+        "ar": "اختر المنطقة التي ينشأ منها الكيس."
+      },
+      "answer": [
+        "TA:renal_cortex"
+      ],
+      "points": 1,
+      "feedback": {
+        "en": "Simple renal cysts usually arise from the cortex.",
+        "ar": "تنشأ الأكياس الكلوية البسيطة عادةً من القشرة."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "multi",
+      "prompt": {
+        "en": "Which structures belong to the renal medulla? Select all that apply.",
+        "ar": "أي البنى التالية تنتمي إلى اللب الكلوي؟ اختر كل ما ينطبق."
+      },
+      "options": {
+        "a": {
+          "en": "Renal pyramids",
+          "ar": "الأهرامات الكلوية"
+        },
+        "b": {
+          "en": "Renal papillae",
+          "ar": "الحليمات الكلوية"
+        },
+        "c": {
+          "en": "Glomeruli",
+          "ar": "الكبيبات"
+        },
+        "d": {
+          "en": "Renal columns",
+          "ar": "الأعمدة الكلوية"
+        }
+      },
+      "answer": [
+        "a",
+        "b"
+      ],
+      "partial_credit": true,
+      "points": 2,
+      "feedback": {
+        "en": "Pyramids and their papillae form the medulla; glomeruli and renal columns are cortical.",
+        "ar": "تشكّل الأهرامات وحليماتها اللب؛ أما الكبيبات والأعمدة الكلوية فهي قشرية."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "order",
+      "prompt": {
+        "en": "Put the structures in the order urine passes through them.",
+        "ar": "رتّب البنى حسب ترتيب مرور البول خلالها."
+      },
+      "options": {
+        "a": {
+          "en": "Ureter",
+          "ar": "الحالب"
+        },
+        "b": {
+          "en": "Major calyx",
+          "ar": "الكأس الكبرى"
+        },
+        "c": {
+          "en": "Minor calyx",
+          "ar": "الكأس الصغرى"
+        },
+        "d": {
+          "en": "Renal pelvis",
+          "ar": "الحوض الكلوي"
+        }
+      },
+      "answer": [
+        "c",
+        "b",
+        "d",
+        "a"
+      ],
+      "points": 2,
+      "feedback": {
+        "en": "Papilla → minor calyx → major calyx → renal pelvis → ureter.",
+        "ar": "الحليمة ← الكأس الصغرى ← الكأس الكبرى ← الحوض الكلوي ← الحالب."
+      }
+    }
+  ],
+  "meta": {
+    "author": "author1",
+    "reviewer": "reviewer1",
+    "version": 1,
+    "status": "published",
+    "difficulty": "easy"
+  }
+}

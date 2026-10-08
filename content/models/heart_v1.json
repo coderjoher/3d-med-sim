@@ -1,0 +1,255 @@
+{
+  "id": "heart_v1",
+  "organ": "heart",
+  "name": {
+    "en": "Heart (placeholder model)",
+    "ar": "القلب (نموذج مبدئي)"
+  },
+  "version": 1,
+  "layers": [
+    {
+      "id": "pericardium",
+      "name": {
+        "en": "Pericardium",
+        "ar": "التامور"
+      }
+    },
+    {
+      "id": "myocardium",
+      "name": {
+        "en": "Myocardium",
+        "ar": "عضلة القلب"
+      }
+    },
+    {
+      "id": "chambers",
+      "name": {
+        "en": "Chambers",
+        "ar": "حجرات القلب"
+      }
+    },
+    {
+      "id": "valves",
+      "name": {
+        "en": "Valves",
+        "ar": "الصمامات"
+      }
+    },
+    {
+      "id": "vessels",
+      "name": {
+        "en": "Great vessels",
+        "ar": "الأوعية الكبرى"
+      }
+    },
+    {
+      "id": "coronary",
+      "name": {
+        "en": "Coronary arteries",
+        "ar": "الشرايين التاجية"
+      }
+    }
+  ],
+  "structures": [
+    {
+      "id": "TA:pericardium",
+      "name": {
+        "en": "Pericardium",
+        "ar": "التامور"
+      },
+      "layer": "pericardium",
+      "ta_code": "A12.1.08.001"
+    },
+    {
+      "id": "TA:myocardium",
+      "name": {
+        "en": "Myocardium",
+        "ar": "عضلة القلب"
+      },
+      "layer": "myocardium",
+      "ta_code": "A12.1.06.001"
+    },
+    {
+      "id": "TA:interventricular_septum",
+      "name": {
+        "en": "Interventricular septum",
+        "ar": "الحاجز بين البطينين"
+      },
+      "layer": "myocardium"
+    },
+    {
+      "id": "TA:right_atrium",
+      "name": {
+        "en": "Right atrium",
+        "ar": "الأذين الأيمن"
+      },
+      "layer": "chambers",
+      "ta_code": "A12.1.01.001"
+    },
+    {
+      "id": "TA:right_ventricle",
+      "name": {
+        "en": "Right ventricle",
+        "ar": "البطين الأيمن"
+      },
+      "layer": "chambers",
+      "ta_code": "A12.1.02.001"
+    },
+    {
+      "id": "TA:left_atrium",
+      "name": {
+        "en": "Left atrium",
+        "ar": "الأذين الأيسر"
+      },
+      "layer": "chambers",
+      "ta_code": "A12.1.03.001"
+    },
+    {
+      "id": "TA:left_ventricle",
+      "name": {
+        "en": "Left ventricle",
+        "ar": "البطين الأيسر"
+      },
+      "layer": "chambers",
+      "ta_code": "A12.1.04.001"
+    },
+    {
+      "id": "TA:tricuspid_valve",
+      "name": {
+        "en": "Tricuspid valve",
+        "ar": "الصمام ثلاثي الشرف"
+      },
+      "layer": "valves"
+    },
+    {
+      "id": "TA:pulmonary_valve",
+      "name": {
+        "en": "Pulmonary valve",
+        "ar": "الصمام الرئوي"
+      },
+      "layer": "valves"
+    },
+    {
+      "id": "TA:mitral_valve",
+      "name": {
+        "en": "Mitral valve",
+        "ar": "الصمام التاجي"
+      },
+      "layer": "valves"
+    },
+    {
+      "id": "TA:aortic_valve",
+      "name": {
+        "en": "Aortic valve",
+        "ar": "الصمام الأبهري"
+      },
+      "layer": "valves"
+    },
+    {
+      "id": "TA:aorta",
+      "name": {
+        "en": "Aorta",
+        "ar": "الشريان الأبهر"
+      },
+      "layer": "vessels",
+      "ta_code": "A12.2.03.001"
+    },
+    {
+      "id": "TA:pulmonary_trunk",
+      "name": {
+        "en": "Pulmonary trunk",
+        "ar": "الجذع الرئوي"
+      },
+      "layer": "vessels",
+      "ta_code": "A12.2.01.001"
+    },
+    {
+      "id": "TA:superior_vena_cava",
+      "name": {
+        "en": "Superior vena cava",
+        "ar": "الوريد الأجوف العلوي"
+      },
+      "layer": "vessels",
+      "ta_code": "A12.3.03.001"
+    },
+    {
+      "id": "TA:inferior_vena_cava",
+      "name": {
+        "en": "Inferior vena cava",
+        "ar": "الوريد الأجوف السفلي"
+      },
+      "layer": "vessels",
+      "ta_code": "A12.3.09.001"
+    },
+    {
+      "id": "TA:right_coronary_artery",
+      "name": {
+        "en": "Right coronary artery",
+        "ar": "الشريان التاجي الأيمن"
+      },
+      "layer": "coronary"
+    },
+    {
+      "id": "TA:left_coronary_artery",
+      "name": {
+        "en": "Left coronary artery",
+        "ar": "الشريان التاجي الأيسر"
+      },
+      "layer": "coronary"
+    },
+    {
+      "id": "TA:left_anterior_descending",
+      "name": {
+        "en": "Left anterior descending artery",
+        "ar": "الشريان الأمامي النازل الأيسر"
+      },
+      "layer": "coronary"
+    },
+    {
+      "id": "TA:left_circumflex_artery",
+      "name": {
+        "en": "Left circumflex artery",
+        "ar": "الشريان المنعطف الأيسر"
+      },
+      "layer": "coronary"
+    }
+  ],
+  "variants": [
+    {
+      "id": "normal",
+      "name": {
+        "en": "Normal",
+        "ar": "طبيعي"
+      },
+      "pathological": false
+    },
+    {
+      "id": "mitral_stenosis",
+      "name": {
+        "en": "Mitral stenosis",
+        "ar": "تضيق الصمام التاجي"
+      },
+      "pathological": true,
+      "affects": [
+        "TA:mitral_valve",
+        "TA:left_atrium"
+      ]
+    },
+    {
+      "id": "myocardial_infarction",
+      "name": {
+        "en": "Anterior myocardial infarction (LAD territory)",
+        "ar": "احتشاء عضلة القلب الأمامي (منطقة الشريان الأمامي النازل)"
+      },
+      "pathological": true,
+      "affects": [
+        "TA:left_anterior_descending",
+        "TA:interventricular_septum",
+        "TA:left_ventricle"
+      ]
+    }
+  ],
+  "animations": [
+    "cardiac_cycle"
+  ]
+}

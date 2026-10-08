@@ -1,0 +1,76 @@
+{
+  "case_id": "PRACTICE-001",
+  "course": "Practice",
+  "topic": "Practice",
+  "model": "heart_v1",
+  "variant": "normal",
+  "stem": {
+    "en": "Practice round — this is not graded. Try pointing, pinching to select, and confirming your answer.",
+    "ar": "جولة تدريبية — لا تُحتسب لها درجة. جرّب الإشارة والضغط للاختيار ثم تأكيد إجابتك."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "pericardium"
+    ]
+  },
+  "labels_visible": true,
+  "feedback_level": "full",
+  "practice": true,
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the left ventricle.",
+        "ar": "اختر البطين الأيسر."
+      },
+      "answer": [
+        "TA:left_ventricle"
+      ],
+      "points": 1,
+      "feedback": {
+        "en": "The left ventricle forms the apex of the heart.",
+        "ar": "يشكّل البطين الأيسر قمة القلب."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "mcq",
+      "prompt": {
+        "en": "How many chambers does the human heart have?",
+        "ar": "كم عدد حجرات قلب الإنسان؟"
+      },
+      "options": {
+        "a": {
+          "en": "Two",
+          "ar": "اثنتان"
+        },
+        "b": {
+          "en": "Four",
+          "ar": "أربع"
+        },
+        "c": {
+          "en": "Three",
+          "ar": "ثلاث"
+        },
+        "d": {
+          "en": "Six",
+          "ar": "ست"
+        }
+      },
+      "answer": "b",
+      "points": 1,
+      "feedback": {
+        "en": "Two atria and two ventricles.",
+        "ar": "أذينان وبطينان."
+      }
+    }
+  ],
+  "meta": {
+    "author": "medsim",
+    "version": 1,
+    "status": "published",
+    "difficulty": "easy"
+  }
+}

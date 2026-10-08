@@ -1,0 +1,130 @@
+{
+  "case_id": "CARD-011",
+  "course": "Anatomy II - Thorax",
+  "topic": "Coronary circulation",
+  "model": "heart_v1",
+  "variant": "myocardial_infarction",
+  "stem": {
+    "en": "A 58-year-old man presents with crushing central chest pain radiating to the left arm. ECG shows ST elevation in leads V1–V4.",
+    "ar": "رجل يبلغ من العمر 58 عاماً يشكو من ألم ضاغط في وسط الصدر ينتشر إلى الذراع الأيسر. يُظهر تخطيط القلب ارتفاعاً في المقطع ST في الاتجاهات V1–V4."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "pericardium"
+    ]
+  },
+  "labels_visible": false,
+  "time_limit_min": 12,
+  "feedback_level": "none",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the artery most likely occluded.",
+        "ar": "اختر الشريان الأرجح أنه مسدود."
+      },
+      "answer": [
+        "TA:left_anterior_descending"
+      ],
+      "points": 2,
+      "feedback": {
+        "en": "Anterior ST elevation (V1–V4) indicates occlusion of the left anterior descending artery.",
+        "ar": "يدل ارتفاع المقطع ST الأمامي (V1–V4) على انسداد الشريان الأمامي النازل الأيسر."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "identify",
+      "prompt": {
+        "en": "Select a structure supplied by this artery that is likely to be infarcted.",
+        "ar": "اختر بنية يغذيها هذا الشريان ومن المرجح أن تكون مصابة بالاحتشاء."
+      },
+      "answer": [
+        "TA:interventricular_septum",
+        "TA:left_ventricle"
+      ],
+      "match": "any",
+      "points": 1,
+      "feedback": {
+        "en": "The LAD supplies the anterior left ventricular wall and the anterior two-thirds of the septum.",
+        "ar": "يغذي الشريان الأمامي النازل الجدار الأمامي للبطين الأيسر والثلثين الأماميين من الحاجز."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "mcq",
+      "prompt": {
+        "en": "The left anterior descending artery is a branch of which artery?",
+        "ar": "الشريان الأمامي النازل الأيسر هو فرع من أي شريان؟"
+      },
+      "options": {
+        "a": {
+          "en": "Right coronary artery",
+          "ar": "الشريان التاجي الأيمن"
+        },
+        "b": {
+          "en": "Left coronary artery",
+          "ar": "الشريان التاجي الأيسر"
+        },
+        "c": {
+          "en": "Left circumflex artery",
+          "ar": "الشريان المنعطف الأيسر"
+        },
+        "d": {
+          "en": "Directly from the aortic arch",
+          "ar": "من قوس الأبهر مباشرة"
+        }
+      },
+      "answer": "b",
+      "points": 1,
+      "feedback": {
+        "en": "The left coronary artery divides into the LAD and the circumflex artery.",
+        "ar": "ينقسم الشريان التاجي الأيسر إلى الشريان الأمامي النازل والشريان المنعطف."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "mcq",
+      "prompt": {
+        "en": "Which serum marker is most specific for myocardial injury?",
+        "ar": "أي مؤشر في المصل هو الأكثر نوعية لإصابة عضلة القلب؟"
+      },
+      "options": {
+        "a": {
+          "en": "Total creatine kinase",
+          "ar": "الكرياتين كيناز الكلي"
+        },
+        "b": {
+          "en": "Cardiac troponin",
+          "ar": "التروبونين القلبي"
+        },
+        "c": {
+          "en": "Lactate dehydrogenase",
+          "ar": "نازعة هيدروجين اللاكتات"
+        },
+        "d": {
+          "en": "Myoglobin",
+          "ar": "الميوغلوبين"
+        }
+      },
+      "answer": "b",
+      "points": 1,
+      "feedback": {
+        "en": "Cardiac troponins (I and T) are the most specific markers of myocardial injury.",
+        "ar": "التروبونينات القلبية (I و T) هي أكثر المؤشرات نوعية لإصابة عضلة القلب."
+      }
+    }
+  ],
+  "meta": {
+    "author": "author1",
+    "reviewer": "reviewer1",
+    "version": 1,
+    "status": "published",
+    "objectives": [
+      "Relate ECG territory to coronary anatomy"
+    ],
+    "difficulty": "medium"
+  }
+}

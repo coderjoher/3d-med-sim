@@ -1,0 +1,113 @@
+{
+  "case_id": "CARD-010",
+  "course": "Anatomy II - Thorax",
+  "topic": "Heart - external anatomy",
+  "model": "heart_v1",
+  "variant": "normal",
+  "stem": {
+    "en": "Explore the normal adult heart in anterior view and answer the questions on its chambers and great vessels.",
+    "ar": "استكشف قلب الإنسان البالغ الطبيعي من المنظر الأمامي وأجب عن الأسئلة المتعلقة بحجراته وأوعيته الكبرى."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "pericardium"
+    ]
+  },
+  "labels_visible": false,
+  "time_limit_min": 8,
+  "feedback_level": "full",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the chamber that forms most of the sternocostal (anterior) surface of the heart.",
+        "ar": "اختر الحجرة التي تشكّل معظم السطح القصي الضلعي (الأمامي) للقلب."
+      },
+      "answer": [
+        "TA:right_ventricle"
+      ],
+      "points": 2,
+      "feedback": {
+        "en": "The right ventricle forms most of the sternocostal surface.",
+        "ar": "يشكّل البطين الأيمن معظم السطح القصي الضلعي."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the vessel that returns venous blood from the upper body to the right atrium.",
+        "ar": "اختر الوعاء الذي يعيد الدم الوريدي من الجزء العلوي من الجسم إلى الأذين الأيمن."
+      },
+      "answer": [
+        "TA:superior_vena_cava"
+      ],
+      "points": 1,
+      "feedback": {
+        "en": "The superior vena cava drains the head, neck, upper limbs and thorax.",
+        "ar": "يصرّف الوريد الأجوف العلوي الرأس والعنق والطرفين العلويين والصدر."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "mcq",
+      "prompt": {
+        "en": "Which valve separates the left atrium from the left ventricle?",
+        "ar": "أي صمام يفصل الأذين الأيسر عن البطين الأيسر؟"
+      },
+      "options": {
+        "a": {
+          "en": "Tricuspid valve",
+          "ar": "الصمام ثلاثي الشرف"
+        },
+        "b": {
+          "en": "Mitral valve",
+          "ar": "الصمام التاجي"
+        },
+        "c": {
+          "en": "Aortic valve",
+          "ar": "الصمام الأبهري"
+        },
+        "d": {
+          "en": "Pulmonary valve",
+          "ar": "الصمام الرئوي"
+        }
+      },
+      "answer": "b",
+      "points": 1,
+      "feedback": {
+        "en": "The mitral (bicuspid) valve is the left atrioventricular valve.",
+        "ar": "الصمام التاجي (ثنائي الشرف) هو الصمام الأذيني البطيني الأيسر."
+      }
+    },
+    {
+      "id": "q4",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the great vessel that leaves the right ventricle.",
+        "ar": "اختر الوعاء الكبير الذي يخرج من البطين الأيمن."
+      },
+      "answer": [
+        "TA:pulmonary_trunk"
+      ],
+      "points": 1,
+      "feedback": {
+        "en": "The pulmonary trunk carries deoxygenated blood to the lungs.",
+        "ar": "ينقل الجذع الرئوي الدم غير المؤكسج إلى الرئتين."
+      }
+    }
+  ],
+  "meta": {
+    "author": "author1",
+    "reviewer": "reviewer1",
+    "version": 1,
+    "status": "published",
+    "objectives": [
+      "Identify the cardiac chambers",
+      "Identify the great vessels"
+    ],
+    "difficulty": "easy"
+  }
+}

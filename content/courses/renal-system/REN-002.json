@@ -1,0 +1,91 @@
+{
+  "case_id": "REN-002",
+  "course": "Renal System",
+  "topic": "Urinary obstruction",
+  "model": "kidney_v1",
+  "variant": "hydronephrosis",
+  "stem": {
+    "en": "A 30-year-old man presents with severe colicky flank pain radiating to the groin. Ultrasound shows a dilated collecting system.",
+    "ar": "رجل يبلغ من العمر 30 عاماً يشكو من ألم مغصي شديد في الخاصرة ينتشر إلى المنطقة الإربية. يُظهر التصوير بالموجات فوق الصوتية توسعاً في الجهاز الجامع."
+  },
+  "initial_view": {
+    "camera": "anterior",
+    "hidden_layers": [
+      "capsule"
+    ]
+  },
+  "labels_visible": false,
+  "time_limit_min": 15,
+  "feedback_level": "score",
+  "questions": [
+    {
+      "id": "q1",
+      "type": "identify",
+      "prompt": {
+        "en": "Select the most dilated structure.",
+        "ar": "اختر البنية الأكثر توسعاً."
+      },
+      "answer": [
+        "TA:renal_pelvis"
+      ],
+      "points": 1,
+      "feedback": {
+        "en": "The renal pelvis dilates first above an obstruction.",
+        "ar": "يتوسع الحوض الكلوي أولاً فوق موضع الانسداد."
+      }
+    },
+    {
+      "id": "q2",
+      "type": "mcq",
+      "prompt": {
+        "en": "What is the most likely cause?",
+        "ar": "ما السبب الأكثر ترجيحاً؟"
+      },
+      "options": {
+        "a": {
+          "en": "Ureteric calculus",
+          "ar": "حصاة في الحالب"
+        },
+        "b": {
+          "en": "Renal cell carcinoma",
+          "ar": "سرطان الخلايا الكلوية"
+        },
+        "c": {
+          "en": "Acute glomerulonephritis",
+          "ar": "التهاب كبيبات الكلى الحاد"
+        },
+        "d": {
+          "en": "Renal artery stenosis",
+          "ar": "تضيق الشريان الكلوي"
+        }
+      },
+      "answer": "a",
+      "points": 1,
+      "feedback": {
+        "en": "Colicky loin-to-groin pain is typical of a ureteric stone.",
+        "ar": "الألم المغصي من الخاصرة إلى الإربية نموذجي لحصاة الحالب."
+      }
+    },
+    {
+      "id": "q3",
+      "type": "text",
+      "prompt": {
+        "en": "Briefly explain why prolonged obstruction leads to thinning of the renal parenchyma.",
+        "ar": "اشرح باختصار لماذا يؤدي الانسداد المطوّل إلى ترقق النسيج الكلوي."
+      },
+      "answer": "Raised back-pressure compresses the papillae and medulla and reduces perfusion, causing atrophy of the parenchyma.",
+      "points": 3,
+      "feedback": {
+        "en": "Back-pressure and ischaemia cause progressive papillary and parenchymal atrophy.",
+        "ar": "يسبب الضغط الراجع ونقص التروية ضموراً تدريجياً في الحليمات والنسيج الكلوي."
+      }
+    }
+  ],
+  "meta": {
+    "author": "author1",
+    "reviewer": "reviewer1",
+    "version": 1,
+    "status": "published",
+    "difficulty": "hard"
+  }
+}
