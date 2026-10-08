@@ -53,12 +53,19 @@ export function PortalApp() {
     <div className="portal" dir={dir} lang={lang} data-testid="portal-root">
       {loading ? <p className="muted portal-main">{s('loading')}</p> : (
         <Routes>
-          <Route path="login" element={user ? <Navigate to="/portal" replace /> : <LoginPage />} />
+          <Route path="login" element={user ? <AfterLogin /> : <LoginPage />} />
           <Route path="*" element={user ? <PortalLayout /> : <LoginRedirect />} />
         </Routes>
       )}
     </div>
   );
+}
+
+/** Once logged in, return to the page originally requested. */
+function AfterLogin() {
+  const location = useLocation();
+  const from = (location.state as { from?: string } | null)?.from;
+  return <Navigate to={from && from.startsWith('/portal') && !from.startsWith('/portal/login') ? from : '/portal'} replace />;
 }
 
 function LoginRedirect() {
@@ -145,8 +152,6 @@ export function PrefsBar() {
 function LoginPage() {
   const { login } = useAuth();
   const { s } = usePrefs();
-  const navigate = useNavigate();
-  const location = useLocation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -154,9 +159,7 @@ function LoginPage() {
   const submit = async () => {
     setBusy(true); setError(null);
     try {
-      await login(username.trim(), password);
-      const from = (location.state as { from?: string } | null)?.from;
-      navigate(from || '/portal', { replace: true });
+      await login(username.trim(), password); // <AfterLogin> then redirects
     } catch (e) {
       const msg = errorText(e);
       setError(/401|invalid|unauthor/i.test(msg) ? s('login_failed') : `${s('login_failed')} (${msg})`);

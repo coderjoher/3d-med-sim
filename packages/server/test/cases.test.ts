@@ -177,7 +177,6 @@ describe.each(BACKENDS)('case authoring workflow ($name)', (backend) => {
     });
     expect([200, 201]).toContain(r.statusCode);
     const body = r.json();
-    console.log("IMPORT", JSON.stringify(body).slice(0, 600));
     expect(Array.isArray(body.created)).toBe(true);
     expect(Array.isArray(body.errors)).toBe(true);
     expect(body.created.length + body.errors.length).toBeGreaterThan(0);
@@ -194,7 +193,6 @@ describe.each(BACKENDS)('case authoring workflow ($name)', (backend) => {
     );
     const r2 = await h.app.inject({ method: 'POST', url: '/api/cases/import', payload: p2, headers: { authorization: `Bearer ${author}`, 'content-type': `multipart/form-data; boundary=${boundary}` } });
     expect([200, 201]).toContain(r2.statusCode);
-    console.log("IMPORT2", r2.body.slice(0, 600));
     expect(r2.json().errors.length).toBeGreaterThan(0);
     // students cannot import
     const r3 = await h.app.inject({ method: 'POST', url: '/api/cases/import', payload, headers: { authorization: `Bearer ${student}`, 'content-type': `multipart/form-data; boundary=${boundary}` } });

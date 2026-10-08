@@ -276,7 +276,12 @@ export async function attemptRoutes(app: FastifyInstance, ctx: AppCtx) {
       const q = row.result.questions.find((x) => x.question_id === req.params.questionId);
       if (!q) throw notFound('Question not found');
       if (points > q.points_possible) throw badRequest(`points must be <= ${q.points_possible}`);
-      const result = applyManualGrade(row.result, req.params.questionId, points);
+      let result: ScoreResult;
+      try {
+        result = applyManualGrade(row.result, req.params.questionId, points);
+      } catch (e) {
+        throw badRequest((e as Error).message || 'Cannot grade this question');
+      }
       await db.exec(`UPDATE attempts SET result = $1::jsonb, score = $2, max_score = $3, percent = $4, pending_manual = $5 WHERE org_id = $6 AND id = $7`, [
         j(result), result.score, result.max_score, result.percent, result.pending_manual, u.org_id, row.id,
       ]);

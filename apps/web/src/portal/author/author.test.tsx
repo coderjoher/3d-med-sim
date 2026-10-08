@@ -5,6 +5,7 @@ import { renderPortal, user, MODEL } from '../testUtils';
 import { CAPTURED_VIEW } from '../testMocks';
 
 vi.mock('../../viewer/ModelViewer', async () => ({ ModelViewer: (await import('../testMocks')).MockModelViewer }));
+vi.mock('../../viewer/ComparisonView', async () => ({ ComparisonView: (await import('../testMocks')).MockComparisonView }));
 vi.mock('../../station/CasePlayer', async () => ({ CasePlayer: (await import('../testMocks')).MockCasePlayer }));
 
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
@@ -99,7 +100,7 @@ describe('author case editor', () => {
     fireEvent.click(screen.getByTestId('save-case'));
     const alert = await screen.findByRole('alert');
     expect(alert.textContent).toMatch(/case_id/);
-    expect(alert.textContent).toMatch(/mcq needs exactly one answer key/);
+    expect(alert.textContent).toMatch(/stem/);
     expect(r.api.find('POST', '/api/cases')).toHaveLength(0);
   });
 

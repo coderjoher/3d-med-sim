@@ -11,7 +11,7 @@ import './strings';
 
 export interface Call { method: string; path: string; url: string; body: unknown }
 type Handler = (call: Call) => unknown;
-export interface RouteSpec { method?: string; path: string | RegExp; reply: unknown | Handler; status?: number }
+export interface RouteSpec { method?: string; path: string | RegExp; reply: Handler | object; status?: number }
 
 export const MODEL: ModelDef = {
   id: 'heart_v1',

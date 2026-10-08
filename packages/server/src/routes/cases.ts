@@ -2,7 +2,23 @@
 import type { FastifyInstance, FastifyRequest } from 'fastify';
 import { toPlayerCase } from '@medsim/core';
 import type { CaseData, CaseRecord, CaseStatus, ModelDef } from '@medsim/core';
-import { convertCsv, convertWorkbook, type ConversionError } from '@medsim/core/spreadsheet';
+import { buildTemplateWorkbook, convertCsv, convertWorkbook, type ConversionError } from '@medsim/core/spreadsheet';
+import { existsSync, readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+/** Locate content/templates/case-template.xlsx (repo root) from src, dist or cwd. */
+function templatePath(): string | undefined {
+  const here = dirname(fileURLToPath(import.meta.url));
+  const candidates = [
+    process.env.CASE_TEMPLATE_PATH,
+    resolve(here, '../../../../content/templates/case-template.xlsx'),
+    resolve(here, '../../../content/templates/case-template.xlsx'),
+    resolve(process.cwd(), 'content/templates/case-template.xlsx'),
+    resolve(process.cwd(), '../../content/templates/case-template.xlsx'),
+  ];
+  return candidates.find((p): p is string => !!p && existsSync(p));
+}
 import { j } from '../db/pool.js';
 import { badRequest, forbidden, hasAnyRole, HttpError, me, notFound, nowIso } from '../http.js';
 import {
@@ -45,6 +61,16 @@ export async function caseRoutes(app: FastifyInstance, ctx: AppCtx) {
   app.post<{ Params: { id: string }; Body: { notes?: string } }>('/api/models/:id/sign-off', { preHandler: auth('reviewer') }, async (req) => {
     const u = me(req);
     return signOffModel(db, u.org_id, req.params.id, u.display_name || u.username, req.body?.notes);
+  });
+
+  /** A-01 template download (public; falls back to generating it). */
+  app.get('/api/templates/case-template.xlsx', async (_req, reply) => {
+    const p = templatePath();
+    const buf = p ? readFileSync(p) : Buffer.from(await buildTemplateWorkbook());
+    reply
+      .header('content-type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+      .header('content-disposition', 'attachment; filename="case-template.xlsx"');
+    return buf;
   });
 
   // --- cases ---------------------------------------------------------------
