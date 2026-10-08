@@ -46,6 +46,7 @@ describe('admin', () => {
   });
 
   it('[T1-02] admin manages cohorts, courses and enrolments', async () => {
+    let enrolled = false;
     const r = renderPortal('/portal/admin', {
       as: ADMIN,
       routes: [
@@ -53,7 +54,8 @@ describe('admin', () => {
         { path: '/api/cohorts', reply: COHORTS },
         { method: 'POST', path: '/api/cohorts', reply: { id: 'co3', org_id: 'demo', name: 'Class of 2030', year: 2028 } },
         { method: 'POST', path: '/api/courses', reply: { id: 'c9', org_id: 'demo', code: 'NEURO', name: 'Neuro' } },
-        { method: 'POST', path: '/api/courses/c2/enrol', reply: {} },
+        { method: 'POST', path: '/api/courses/c2/enrol', reply: () => { enrolled = true; return {}; } },
+        { path: '/api/courses/c2/enrolments', reply: () => (enrolled ? [{ cohort_id: 'co2' }] : []) },
       ],
     });
     await screen.findByTestId('users-table');
@@ -73,6 +75,7 @@ describe('admin', () => {
     fireEvent.click(screen.getByTestId('enrol-RENAL'));
     await waitFor(() => expect(r.api.find('POST', '/api/courses/c2/enrol')[0]?.body).toEqual({ cohort_id: 'co2' }));
     expect(await screen.findByRole('status')).toHaveTextContent('Class of 2029 enrolled in RENAL');
+    await waitFor(() => expect(screen.getByTestId('enrolments-c2')).toHaveTextContent('Class of 2029'));
   });
 
   it('[T3-02] course package export downloads GET /courses/:id/package; import POSTs the package JSON', async () => {

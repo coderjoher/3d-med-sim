@@ -187,6 +187,7 @@ export function CoursesAdmin() {
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [enrolSel, setEnrolSel] = useState<Record<string, string>>({});
+  const [enrolTick, setEnrolTick] = useState(0);
   const [errors, setErrors] = useState<string[]>([]);
   const [msg, setMsg] = useState<string | null>(null);
   const create = async () => {
@@ -204,6 +205,7 @@ export function CoursesAdmin() {
     setErrors([]); setMsg(null);
     try {
       await api(`/courses/${encodeURIComponent(c.id)}/enrol`, { method: 'POST', json: { cohort_id: cohortId } });
+      setEnrolTick((t) => t + 1);
       setMsg(s('p.enrolled', { cohort: cohorts.data?.find((x) => x.id === cohortId)?.name ?? cohortId, course: c.code }));
     } catch (e) { setErrors(errorList(e)); }
   };
@@ -219,12 +221,13 @@ export function CoursesAdmin() {
       <ErrorBox error={courses.error} />
       <Loading when={courses.loading && !courses.data}>
         <table data-testid="courses-table">
-          <thead><tr><th>{s('p.code')}</th><th>{s('p.name')}</th><th>{s('enrol')}</th></tr></thead>
+          <thead><tr><th>{s('p.code')}</th><th>{s('p.name')}</th><th>{s('p.enrolled_cohorts')}</th><th>{s('enrol')}</th></tr></thead>
           <tbody>
             {(courses.data ?? []).map((c) => (
               <tr key={c.id} data-testid={`course-row-${c.code}`}>
                 <td>{c.code}</td>
                 <td>{c.name}</td>
+                <td><EnrolledCohorts key={`${c.id}-${enrolTick}`} courseId={c.id} cohorts={cohorts.data ?? []} /></td>
                 <td className="row">
                   <select aria-label={s('p.cohort')} data-testid={`enrol-cohort-${c.code}`} value={enrolSel[c.id] ?? cohorts.data?.[0]?.id ?? ''} onChange={(e) => setEnrolSel({ ...enrolSel, [c.id]: e.target.value })}>
                     {(cohorts.data ?? []).map((co) => <option key={co.id} value={co.id}>{co.name}</option>)}
@@ -238,6 +241,16 @@ export function CoursesAdmin() {
       </Loading>
     </section>
   );
+}
+
+/** GET /api/courses/:id/enrolments — tolerant of cohort ids, cohort objects or {cohort_id} rows. */
+function EnrolledCohorts({ courseId, cohorts }: { courseId: string; cohorts: Cohort[] }) {
+  const res = useApi<unknown[]>(`/courses/${encodeURIComponent(courseId)}/enrolments`);
+  const names = (res.data ?? []).map((e) => {
+    const id = typeof e === 'string' ? e : (e as { cohort_id?: string; id?: string }).cohort_id ?? (e as { id?: string }).id ?? '';
+    return cohorts.find((c) => c.id === id)?.name ?? (e as { name?: string }).name ?? id;
+  });
+  return <span data-testid={`enrolments-${courseId}`}>{res.error ? '—' : names.join(', ') || '—'}</span>;
 }
 
 /** Phase 3 / G4: export a course package and import it (e.g. into another tenant). */
@@ -262,8 +275,9 @@ export function PackagesAdmin() {
       if (pkg.format !== 'medsim-course-package') throw new Error(s('p.err_not_package'));
     } catch (e) { setErrors([errorText(e)]); return; }
     try {
-      const r = await api<{ course: Course; cases: number }>('/packages/import', { method: 'POST', json: pkg });
+      const r = await api<{ course: Course; cases: number; errors?: unknown[] }>('/packages/import', { method: 'POST', json: pkg });
       setMsg(s('p.package_imported', { course: r.course.code, n: r.cases }));
+      if (r.errors?.length) setErrors([s('p.package_errors'), ...r.errors.map((x) => (typeof x === 'string' ? x : JSON.stringify(x)))]);
       courses.reload();
     } catch (e) { setErrors(errorList(e)); }
   };

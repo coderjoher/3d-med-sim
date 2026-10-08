@@ -5,7 +5,7 @@
  */
 import { useEffect, useState } from 'react';
 import { checkProctorPin, isBlockedKey } from '@medsim/core';
-import { usePrefs } from '@shared/prefs';
+import { usePrefs } from '../shared/prefs';
 import { debugRoot } from '../viewer/debug';
 
 export const PROCTOR_PIN: string = (import.meta.env?.VITE_PROCTOR_PIN as string | undefined) || '2468';

@@ -16,16 +16,23 @@ export function ImportCases() {
   const courses = useApi<Course[]>('/courses');
   const [courseId, setCourseId] = useState('');
   const [file, setFile] = useState<File | null>(null);
+  const [casesCsv, setCasesCsv] = useState<File | null>(null);
+  const [questionsCsv, setQuestionsCsv] = useState<File | null>(null);
+  const ready = !!file || (!!casesCsv && !!questionsCsv);
   const [busy, setBusy] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [result, setResult] = useState<{ created: CaseRecord[]; errors: ConversionError[] } | null>(null);
   const course = courseId || courses.data?.[0]?.id || '';
 
   const upload = async () => {
-    if (!file || !course) return;
+    if (!ready || !course) return;
     const fd = new FormData();
     fd.append('course_id', course);
-    fd.append('file', file, file.name);
+    if (file) fd.append('file', file, file.name);
+    else if (casesCsv && questionsCsv) {
+      fd.append('cases', casesCsv, casesCsv.name);
+      fd.append('questions', questionsCsv, questionsCsv.name);
+    }
     setBusy(true); setErrors([]); setResult(null);
     try {
       setResult(await api<{ created: CaseRecord[]; errors: ConversionError[] }>('/cases/import', { method: 'POST', body: fd }));
@@ -48,10 +55,19 @@ export function ImportCases() {
               {(courses.data ?? []).map((c) => <option key={c.id} value={c.id}>{c.code} — {c.name}</option>)}
             </select>
           </label>
-          <label>{s('p.file')}{' '}
-            <input type="file" data-testid="import-file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
+          <label>{s('p.import_xlsx')}{' '}
+            <input type="file" data-testid="import-file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
           </label>
-          <button type="button" className="primary" data-testid="import-upload" disabled={!file || !course || busy} onClick={() => void upload()}>{s('p.upload')}</button>
+        </div>
+        <div className="row">
+          <span className="muted">{s('p.import_or_csv')}:</span>
+          <label>{s('p.cases_csv')}{' '}
+            <input type="file" data-testid="import-cases-csv" accept=".csv,text/csv" onChange={(e) => setCasesCsv(e.target.files?.[0] ?? null)} />
+          </label>
+          <label>{s('p.questions_csv')}{' '}
+            <input type="file" data-testid="import-questions-csv" accept=".csv,text/csv" onChange={(e) => setQuestionsCsv(e.target.files?.[0] ?? null)} />
+          </label>
+          <button type="button" className="primary" data-testid="import-upload" disabled={!ready || !course || busy} onClick={() => void upload()}>{s('p.upload')}</button>
         </div>
       </section>
       <ErrorBox errors={errors} />

@@ -49,7 +49,7 @@ function EditorForm({ models, courses, record, onSaved, title }: FormProps) {
   const set = (p: Partial<CaseForm>) => setForm((f) => ({ ...f, ...p }));
   const setQuestion = (i: number, q: QuestionForm) => setForm((f) => ({ ...f, questions: f.questions.map((x, j) => (j === i ? q : x)) }));
   const status = record?.status;
-  const editable = !status || status === 'draft' || status === 'published';
+  const editable = status !== 'archived';
 
   useEffect(() => {
     if (tagIndex !== null && form.questions[tagIndex]?.type !== 'identify') setTagIndex(firstIdentify(form.questions));

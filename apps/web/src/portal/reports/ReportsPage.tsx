@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { CaseRecord, CohortStats, Course, ItemAnalysis, ModelDef, QuestionAnalytics, StructureHeat, StudentCourseResult, SuccessMetrics } from '@medsim/core';
 import { api, download } from '../../shared/api';
 import { usePrefs } from '../../shared/prefs';
+import { useAuth } from '../../shared/auth';
 import { ModelViewer } from '../../viewer/ModelViewer';
 import { errorText, num, pct, rate, secs, useApi } from '../hooks';
 import { Empty, ErrorBox, Loading, Tabs } from '../ui';
@@ -300,6 +301,8 @@ export function ItemReport({ caseRec }: { caseRec: CaseRecord }) {
 /** §17 success metrics, T3-03. */
 export function MetricsDashboard({ courseId }: { courseId: string }) {
   const { s } = usePrefs();
+  const { hasRole } = useAuth();
+  const isAdmin = hasRole('admin');
   const res = useApi<SuccessMetrics>(`/reports/metrics?course_id=${encodeURIComponent(courseId)}`);
   const sus = useApi<{ n: number; mean: number | null }>('/sus/summary');
   const [examCsv, setExamCsv] = useState('');
@@ -345,14 +348,14 @@ export function MetricsDashboard({ courseId }: { courseId: string }) {
           ))}
         </div>
       </Loading>
-      <details className="card portal-section">
+      {isAdmin && <details className="card portal-section">
         <summary>{s('p.exam_upload')}</summary>
         <p className="muted">{s('p.exam_help')}</p>
         <textarea data-testid="exam-csv" rows={4} style={{ width: '100%' }} value={examCsv} onChange={(e) => setExamCsv(e.target.value)} placeholder={'student1,72\nstudent2,85'} />
         <button type="button" onClick={() => void uploadExam()}>{s('p.upload')}</button>
         <ErrorBox error={err} />
         {msg && <p role="status" className="portal-ok">{msg}</p>}
-      </details>
+      </details>}
     </section>
   );
 }

@@ -7,7 +7,7 @@ import {
   OfflineQueue, type AnswerRecord, type HeartbeatResponse, type InteractionLog, type KeyValueStorage,
   type ScoreResult, type StationCommand, type StationState, type SubmitAttemptRequest,
 } from '@medsim/core';
-import { api } from '@shared/api';
+import { api } from '../shared/api';
 
 export function storage(): KeyValueStorage {
   try {
@@ -98,8 +98,9 @@ export function syncQueue(): OfflineQueue<SyncItem> {
 /** Push queued submissions to POST /api/attempts/sync (idempotent server-side on client_attempt_id). */
 export async function flushQueue(): Promise<{ sent: number; remaining: number }> {
   return syncQueue().flush(async (item) => {
-    const res = await api<{ synced: string[] }>('/attempts/sync', { method: 'POST', json: { items: [item] } });
-    if (Array.isArray(res?.synced) && res.synced.length === 0) throw new Error('not synced');
+    const res = await api<{ synced: string[]; failed?: Array<{ client_attempt_id: string; error: string }> }>('/attempts/sync', { method: 'POST', json: { items: [item] } });
+    // server answers with the client_attempt_ids it stored (idempotent); anything else stays queued
+    if (!Array.isArray(res?.synced) || !res.synced.includes(item.client_attempt_id)) throw new Error(res?.failed?.[0]?.error ?? 'not synced');
   });
 }
 
@@ -133,7 +134,7 @@ export function notifyQueueChanged() {
 
 // ------------------------------------------------------------------ heartbeat (R-08, T1-09)
 
-export function useHeartbeat(enabled: boolean, id: string, state: () => Partial<StationState>, onCommand: (c: StationCommand) => void, intervalMs = 5000) {
+export function useHeartbeat(enabled: boolean, id: string, state: () => Partial<StationState> & { session_id?: string }, onCommand: (c: StationCommand) => void, intervalMs = 5000) {
   const stateRef = useRef(state);
   stateRef.current = state;
   const cmdRef = useRef(onCommand);

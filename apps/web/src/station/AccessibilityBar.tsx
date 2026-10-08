@@ -1,5 +1,5 @@
 /** NFR accessibility / localization + I-05, I-06, I-08 and T3-04 station toggles. */
-import { usePrefs } from '@shared/prefs';
+import { usePrefs } from '../shared/prefs';
 import { useStationInput } from './StationInput';
 import { TrackingIndicator } from './HandOverlay';
 

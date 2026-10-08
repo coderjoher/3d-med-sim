@@ -16,9 +16,9 @@ import {
   type ScoreResult, type StartAttemptResponse, type StationCommand, type StationStatus,
   type SubmitAttemptResponse,
 } from '@medsim/core';
-import { usePrefs } from '@shared/prefs';
-import { useAuth } from '@shared/auth';
-import { api, ApiError } from '@shared/api';
+import { usePrefs } from '../shared/prefs';
+import { useAuth } from '../shared/auth';
+import { api, ApiError } from '../shared/api';
 import { CasePlayer } from './CasePlayer';
 import { Calibration } from './Calibration';
 import { AccessibilityBar } from './AccessibilityBar';
@@ -122,6 +122,7 @@ function StationFlow() {
   const online = useHeartbeat(!local && !!auth.user, sid, () => ({
     status, camera_ok: input.cameraOk, input_mode: input.mode, locked,
     student_id: auth.user?.id, case_id: active?.playerCase.case_id, attempt_id: active?.attemptId,
+    ...(active?.sessionId ? { session_id: active.sessionId } : {}),
   }), onCommand, hbMs);
 
   // ---------------------------------------------------------- sign in
@@ -145,7 +146,7 @@ function StationFlow() {
       if (u.lang) prefs.set({ lang: u.lang });
       setStep('calibration');
     } catch (err) {
-      setSigninErr(err instanceof ApiError && err.status === 401 ? s('login_failed') : `${s('station.server_error')}${err instanceof Error ? ` (${err.message})` : ''}`);
+      setSigninErr((err as unknown) instanceof ApiError && (err as ApiError).status === 401 ? s('login_failed') : `${s('station.server_error')}${(err as Error)?.message ? ` (${(err as Error).message})` : ''}`);
     }
   };
 
@@ -231,7 +232,7 @@ function StationFlow() {
     return r;
   };
 
-  const onPracticeSubmit = (answers: AnswerRecord[]) => {
+  const onPracticeSubmit = async (answers: AnswerRecord[]): Promise<Partial<ScoreResult> | void> => {
     // Practice is never graded or stored (I-03, T0-12): score locally for feedback only.
     try { return applyFeedbackLevel(scoreCase(PRACTICE_CASE, answers), 'full'); } catch { return undefined; }
   };

@@ -10,7 +10,7 @@ import {
   type AnswerRecord, type AnswerValue, type CameraView, type InputSource, type InteractionLog,
   type PlayerCase, type PlayerQuestion, type ScoreResult,
 } from '@medsim/core';
-import { usePrefs } from '@shared/prefs';
+import { usePrefs } from '../shared/prefs';
 import { ModelViewer } from '../viewer/ModelViewer';
 import { ComparisonView } from '../viewer/ComparisonView';
 import { resolveModel, structureName } from '../viewer/models';

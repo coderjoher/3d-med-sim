@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import type { CaseRecord, Cohort, LabSession, StationCommand, StationState } from '@medsim/core';
+import type { CaseRecord, Cohort, LabSession, StationCommand, StationState, User } from '@medsim/core';
 import { api } from '../../shared/api';
 import { usePrefs } from '../../shared/prefs';
 import { errorText, errorList, useApi, usePoll } from '../hooks';
@@ -101,12 +101,14 @@ export function SessionsPage() {
 export function SessionConsole() {
   const { id = '' } = useParams();
   const { s } = usePrefs();
-  const sessions = useApi<LabSession[]>('/sessions');
+  const sessionRes = useApi<LabSession>(`/sessions/${encodeURIComponent(id)}`);
+  const users = useApi<User[]>('/users');
   const stations = usePoll<StationState[]>(`/sessions/${encodeURIComponent(id)}/stations`, STATION_POLL_MS);
   const [override, setOverride] = useState<LabSession | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
-  const session = override ?? sessions.data?.find((x) => x.id === id);
+  const session = override ?? sessionRes.data;
+  const studentName = (sid?: string) => (sid ? users.data?.find((u) => u.id === sid || u.username === sid)?.display_name ?? sid : '—');
 
   const control = async (action: 'start' | 'stop') => {
     setError(null);
@@ -143,7 +145,7 @@ export function SessionConsole() {
         <button type="button" data-testid="stop-session" disabled={!session || session.status !== 'running'} onClick={() => void control('stop')}>{s('stop_session')}</button>
         <span className="muted" data-testid="poll-info">{s('p.auto_refresh', { n: STATION_POLL_MS / 1000 })}</span>
       </div>
-      <ErrorBox error={error || sessions.error || stations.error} />
+      <ErrorBox error={error || sessionRes.error || stations.error} />
       {notice && <p role="status" className="portal-ok">{notice}</p>}
 
       <h2>{s('stations')} <span className="muted">({list.length})</span></h2>
@@ -158,7 +160,7 @@ export function SessionConsole() {
                 <dt>{s('status')}</dt><dd data-testid={`station-status-${st.station_id}`}>{s(`station.${offline ? 'offline' : st.status}`)}</dd>
                 <dt>{s('p.camera')}</dt><dd className={st.camera_ok ? 'portal-ok' : 'error'}>{st.camera_ok ? s('p.camera_ok') : s('p.camera_fail')}</dd>
                 <dt>{s('input_mode')}</dt><dd>{s(`input.${st.input_mode}`)}</dd>
-                <dt>{s('student')}</dt><dd>{st.student_id ?? '—'}</dd>
+                <dt>{s('student')}</dt><dd>{studentName(st.student_id)}</dd>
                 <dt>{s('case')}</dt><dd>{st.case_id ?? '—'}</dd>
                 <dt>{s('p.last_seen')}</dt><dd>{ago(now - st.last_seen, s)}</dd>
               </dl>

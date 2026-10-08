@@ -214,4 +214,22 @@ describe('author case editor', () => {
     expect((body.get('file') as File).name).toBe('cases.xlsx');
     expect(screen.getByText('unknown type')).toBeInTheDocument();
   });
+
+  it('[T1-03] spreadsheet import also accepts the two sheets as CSV (fields cases + questions)', async () => {
+    const r = renderPortal('/portal/cases/import', {
+      as: AUTHOR,
+      routes: [{ method: 'POST', path: '/api/cases/import', status: 201, reply: { created: [record(SAMPLE)], errors: [] } }],
+    });
+    await waitFor(() => expect((screen.getByTestId('import-course') as HTMLSelectElement).value).toBe('c1'));
+    expect(screen.getByTestId('import-upload')).toBeDisabled();
+    fireEvent.change(screen.getByTestId('import-cases-csv'), { target: { files: [new File(['a'], 'cases.csv')] } });
+    expect(screen.getByTestId('import-upload')).toBeDisabled();
+    fireEvent.change(screen.getByTestId('import-questions-csv'), { target: { files: [new File(['b'], 'questions.csv')] } });
+    fireEvent.click(screen.getByTestId('import-upload'));
+    await screen.findByTestId('import-result');
+    const body = r.api.find('POST', '/api/cases/import')[0].body as FormData;
+    expect((body.get('cases') as File).name).toBe('cases.csv');
+    expect((body.get('questions') as File).name).toBe('questions.csv');
+    expect(body.get('file')).toBeNull();
+  });
 });

@@ -55,7 +55,8 @@ describe('proctor console', () => {
     const r = renderPortal('/portal/sessions/s1', {
       as: PROCTOR,
       routes: [
-        { path: '/api/sessions', reply: [SESSION] },
+        { path: '/api/sessions/s1', reply: SESSION },
+        { path: '/api/users', reply: [{ id: 'student1', org_id: 'demo', username: 'student1', display_name: 'Layla Hassan', roles: ['student'] }] },
         { path: '/api/sessions/s1/stations', reply: stations },
         { method: 'POST', path: '/api/sessions/s1/start', reply: { ...SESSION, status: 'running', started_at: '2026-10-08T10:00:00Z' } },
         { method: 'POST', path: '/api/sessions/s1/stop', reply: { ...SESSION, status: 'stopped' } },
@@ -64,7 +65,7 @@ describe('proctor console', () => {
     expect(await screen.findByTestId('station-ST1')).toHaveAttribute('data-offline', 'false');
     expect(screen.getByTestId('station-ST2')).toHaveAttribute('data-offline', 'true');
     expect(screen.getByTestId('station-ST2').className).toMatch(/offline/);
-    expect(screen.getByTestId('station-ST1').textContent).toMatch(/student1/);
+    expect(screen.getByTestId('station-ST1').textContent).toMatch(/Layla Hassan/);
     expect(screen.getByTestId('station-ST1').textContent).toMatch(/heart_01/);
     expect(screen.getByTestId('station-ST1').textContent).toMatch(/Hand gestures/);
     expect(screen.getByTestId('station-ST2').textContent).toMatch(/Not available/);
@@ -86,7 +87,8 @@ describe('proctor console', () => {
     const r = renderPortal('/portal/sessions/s1', {
       as: PROCTOR,
       routes: [
-        { path: '/api/sessions', reply: [{ ...SESSION, status: 'running' }] },
+        { path: '/api/sessions/s1', reply: { ...SESSION, status: 'running' } },
+        { path: '/api/users', reply: [] },
         { path: '/api/sessions/s1/stations', reply: () => [
           { station_id: 'ST1', status: 'in_progress', camera_ok: false, input_mode: 'gesture', locked: false, last_seen: Date.now() },
           { station_id: 'ST2', status: 'in_progress', camera_ok: true, input_mode: 'fallback', locked: true, last_seen: Date.now() },

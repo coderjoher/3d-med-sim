@@ -5,7 +5,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { computeCalibration, type Calibration as Cal } from '@medsim/core';
-import { usePrefs } from '@shared/prefs';
+import { usePrefs } from '../shared/prefs';
 import { useStationInput } from './StationInput';
 
 const TARGETS = [

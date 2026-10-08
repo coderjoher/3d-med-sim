@@ -94,7 +94,7 @@ export function StationInputProvider({ children, initialMode = 'gesture', primar
     trackerRef.current = tr;
     // Test / diagnostics hook: feed landmark messages exactly as the worker would.
     debugRoot().injectLandmarks = (m: Omit<VisionLandmarks, 'type' | 'id' | 'procMs'> & Partial<VisionLandmarks>) => {
-      (tr as unknown as { onWorker(m: VisionLandmarks): void }).onWorker({ type: 'landmarks', id: 0, procMs: 0, face: null, ...m });
+      (tr as unknown as { onWorker(m: VisionLandmarks): void }).onWorker({ id: 0, procMs: 0, ...m, face: m.face ?? null, type: 'landmarks' });
     };
     return tr;
   }, [bus, calibration, primaryHand]);

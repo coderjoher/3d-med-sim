@@ -429,19 +429,22 @@ export class ViewerController {
       cam = this.eyes[sx < eng.getRenderWidth() / 2 ? 0 : 1];
       x = sx;
     }
-    const hit = this.scene.pick(x, sy, (m) => this.isPickable(m), false, cam);
+    // Pick through translucent shells (pericardium, myocardium wall): the nearest opaque
+    // structure wins; a shell is selected only when nothing opaque is behind the cursor.
+    const planes = [this.scene.clipPlane, this.scene.clipPlane2, this.scene.clipPlane3].filter((p): p is Plane => !!p);
+    const hits = (this.scene.multiPick(x, sy, (m) => this.isPickable(m), cam) ?? [])
+      // the clipped-away half is not visible, so it is not pickable either
+      .filter((h) => !h.pickedPoint || planes.every((p) => p.dotCoordinate(h.pickedPoint!) <= 0));
+    hits.sort((a, b) => a.distance - b.distance);
+    const opaque = hits.find((h) => ((h.pickedMesh?.material as PBRMaterial | null)?.alpha ?? 1) >= 0.99);
+    const hit = opaque ?? hits[0];
     const meta = hit?.pickedMesh?.metadata as StructureMeta | undefined;
     return hit?.hit && meta?.structureId ? meta.structureId : null;
   }
 
   private isPickable(m: AbstractMesh): boolean {
     const meta = m.metadata as StructureMeta | undefined;
-    if (!meta?.structureId || !m.isEnabled() || !m.isVisible) return false;
-    // translucent shells (pericardium) should not block picking of what is inside
-    const mat = m.material as PBRMaterial | null;
-    if (mat && mat.alpha < 0.3) return false;
-    // clipped half is not pickable
-    return true;
+    return !!meta?.structureId && m.isEnabled() && m.isVisible;
   }
 
   /** Canvas-local CSS px position where the structure is actually pickable (for tests), or null. */

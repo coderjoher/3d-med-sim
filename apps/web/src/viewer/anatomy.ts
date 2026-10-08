@@ -116,18 +116,39 @@ function heartSpec(n: string): StructureBuild | null {
 function kidneySpec(n: string): StructureBuild | null {
   if (has(n, 'capsule') || has(n, 'perirenal') || has(n, 'fascia')) return { shapes: [{ kind: 'ellipsoid', center: [0, 0, 0], radii: [0.68, 1.12, 0.48] }], look: { color: C.fat, alpha: 0.2 } };
   if (has(n, 'cortex')) return { shapes: [{ kind: 'ellipsoid', center: [0, 0, 0], radii: [0.62, 1.05, 0.42] }], look: { color: C.cortex } };
-  if (has(n, 'medulla') || has(n, 'pyramid')) return { shapes: [
-    { kind: 'ellipsoid', center: [0.05, 0.62, 0], radii: [0.2, 0.14, 0.2], rotation: [0, 0, 0.6] },
-    { kind: 'ellipsoid', center: [-0.15, 0.3, 0], radii: [0.22, 0.14, 0.22], rotation: [0, 0, 0.3] },
-    { kind: 'ellipsoid', center: [-0.22, -0.05, 0], radii: [0.22, 0.13, 0.22] },
-    { kind: 'ellipsoid', center: [-0.15, -0.4, 0], radii: [0.22, 0.14, 0.22], rotation: [0, 0, -0.3] },
-    { kind: 'ellipsoid', center: [0.05, -0.7, 0], radii: [0.2, 0.14, 0.2], rotation: [0, 0, -0.6] },
+  if (has(n, 'pyramid')) return { shapes: [
+    { kind: 'ellipsoid', center: [0.02, 0.62, 0], radii: [0.2, 0.13, 0.2], rotation: [0, 0, 0.6] },
+    { kind: 'ellipsoid', center: [-0.18, 0.3, 0], radii: [0.21, 0.13, 0.21], rotation: [0, 0, 0.3] },
+    { kind: 'ellipsoid', center: [-0.24, -0.05, 0], radii: [0.21, 0.12, 0.21] },
+    { kind: 'ellipsoid', center: [-0.18, -0.4, 0], radii: [0.21, 0.13, 0.21], rotation: [0, 0, -0.3] },
+    { kind: 'ellipsoid', center: [0.02, -0.7, 0], radii: [0.2, 0.13, 0.2], rotation: [0, 0, -0.6] },
   ], look: { color: C.medulla } };
-  if (has(n, 'calyx') || has(n, 'calyces')) return { shapes: [
-    { kind: 'tube', path: [[0.2, 0.0, 0], [0.12, 0.5, 0]], radius: 0.06 },
-    { kind: 'tube', path: [[0.2, 0.0, 0], [0.05, 0.0, 0]], radius: 0.06 },
-    { kind: 'tube', path: [[0.2, 0.0, 0], [0.12, -0.5, 0]], radius: 0.06 },
+  if (has(n, 'medulla')) return { shapes: [{ kind: 'ellipsoid', center: [-0.05, 0, 0], radii: [0.45, 0.88, 0.33] }], look: { color: [0.5, 0.18, 0.22], alpha: 0.35 } };
+  if (has(n, 'papilla')) return { shapes: [
+    { kind: 'ellipsoid', center: [0.13, 0.5, 0], radii: [0.05, 0.05, 0.05] },
+    { kind: 'ellipsoid', center: [0.02, 0.24, 0], radii: [0.05, 0.05, 0.05] },
+    { kind: 'ellipsoid', center: [-0.03, -0.05, 0], radii: [0.05, 0.05, 0.05] },
+    { kind: 'ellipsoid', center: [0.02, -0.34, 0], radii: [0.05, 0.05, 0.05] },
+    { kind: 'ellipsoid', center: [0.13, -0.58, 0], radii: [0.05, 0.05, 0.05] },
+  ], look: { color: [0.75, 0.4, 0.4] } };
+  if (has(n, 'column')) return { shapes: [
+    { kind: 'box', center: [-0.32, 0.48, 0], size: [0.22, 0.06, 0.3], rotation: [0, 0, 0.45] },
+    { kind: 'box', center: [-0.4, 0.13, 0], size: [0.22, 0.06, 0.3], rotation: [0, 0, 0.15] },
+    { kind: 'box', center: [-0.4, -0.23, 0], size: [0.22, 0.06, 0.3], rotation: [0, 0, -0.15] },
+    { kind: 'box', center: [-0.32, -0.57, 0], size: [0.22, 0.06, 0.3], rotation: [0, 0, -0.45] },
+  ], look: { color: [0.6, 0.24, 0.2] } };
+  if (has(n, 'minor') && (has(n, 'calyx') || has(n, 'calyces'))) return { shapes: [
+    { kind: 'tube', path: [[0.13, 0.5, 0], [0.22, 0.35, 0]], radius: 0.045 },
+    { kind: 'tube', path: [[0.02, 0.24, 0], [0.16, 0.18, 0]], radius: 0.045 },
+    { kind: 'tube', path: [[-0.03, -0.05, 0], [0.14, -0.05, 0]], radius: 0.045 },
+    { kind: 'tube', path: [[0.02, -0.34, 0], [0.16, -0.28, 0]], radius: 0.045 },
+    { kind: 'tube', path: [[0.13, -0.58, 0], [0.22, -0.42, 0]], radius: 0.045 },
   ], look: { color: C.pelvis } };
+  if (has(n, 'calyx') || has(n, 'calyces')) return { shapes: [
+    { kind: 'tube', path: [[0.3, -0.02, 0], [0.22, 0.35, 0]], radius: 0.06 },
+    { kind: 'tube', path: [[0.3, -0.02, 0], [0.15, -0.05, 0]], radius: 0.06 },
+    { kind: 'tube', path: [[0.3, -0.02, 0], [0.22, -0.42, 0]], radius: 0.06 },
+  ], look: { color: [0.9, 0.82, 0.56] } };
   if (has(n, 'pelvis')) return { shapes: [{ kind: 'ellipsoid', center: [0.32, -0.05, 0], radii: [0.2, 0.26, 0.14], rotation: [0, 0, -0.3] }], look: { color: C.pelvis } };
   if (has(n, 'ureter')) return { shapes: [{ kind: 'tube', path: [[0.42, -0.25, 0], [0.55, -0.8, 0.05], [0.5, -1.7, 0.1]], radius: 0.06 }], look: { color: [0.9, 0.78, 0.55] } };
   if (has(n, 'renal', 'artery') || has(n, 'arter')) return { shapes: [{ kind: 'tube', path: [[0.3, 0.15, -0.05], [0.8, 0.2, -0.08], [1.4, 0.25, -0.1]], radius: 0.065 }], look: { color: C.artery } };
@@ -199,8 +220,9 @@ export function variantMods(variantId: string, organ: string, structureIds: stri
   } else if (v.includes('hydro')) {
     const pelvis = find('pelvis');
     if (pelvis) mods.set(pelvis, { scale: 1.9, color: [0.96, 0.93, 0.72] });
-    const calyx = find('calyx') ?? find('calyces');
-    if (calyx) mods.set(calyx, { scale: 1.8 });
+    for (const id of structureIds.filter((x) => /calyx|calyces/.test(normId(x)))) mods.set(id, { scale: 1.8, color: [0.96, 0.93, 0.72] });
+    const papilla = find('papilla');
+    if (papilla) mods.set(papilla, { scale: 0.6 });
     const medulla = find('medulla') ?? find('pyramid');
     if (medulla) mods.set(medulla, { scale: 0.7 });
   } else if (v.includes('stone') || v.includes('calcul') || v.includes('lithiasis')) {
